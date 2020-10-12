@@ -5,6 +5,33 @@
  */
 
 module.exports = {
-  /* Your site config here */
-  plugins: [],
+/* Your site config here */
+   siteMetadata: {
+    title: "Gatsby Markdown Blog",
+    description:
+      "Hogwarts Potions master, Head of Slytherin house and former Death Eater.",
+    url: "https://www.doe.com",
+    image: "/banner-img.png",
+    twitterUsername: "@shahriyar31",
+  },
+
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/posts`,
+      },
+    },
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-mdx`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+  ],
 }
