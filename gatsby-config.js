@@ -10,7 +10,7 @@ module.exports = {
     title: "Gatsby Markdown Blog",
     description:
       "Hogwarts Potions master, Head of Slytherin house and former Death Eater.",
-    url: "https://wizardly-torvalds-458749.netlify.app/",
+    url: "https://wizardly-torvalds-458749.netlify.app",
     image: "/banner-img.png",
     twitterUsername: "@shahriyar31",
   },
