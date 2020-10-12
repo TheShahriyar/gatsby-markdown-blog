@@ -31,14 +31,14 @@ const SEO = ({ title, description, pageImage }) => {
       <meta name="og:type" content="website"/>
       <meta name="og:title" content={`${title} | ${siteTitle}`}/>
       <meta name="og:description" content={description || siteDesc}/>
-      <meta name="og:image" content={pageImage || `${siteUrl}${image}`}/>
+      <meta name="og:image" content={`${siteUrl}${pageImage}` || `${siteUrl}${image}`}/>
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:creator" content={twitterUsername} />
       <meta name="twitter:title" content={`${title} | ${siteTitle}`} />
       <meta name="twitter:description" content={description || siteDesc} />
-      <meta name="twitter:image" content={pageImage || `${siteUrl}${image}`} />
+      <meta name="twitter:image" content={`${siteUrl}${pageImage}` || `${siteUrl}${image}`} />
     </Helmet>
     
   )
