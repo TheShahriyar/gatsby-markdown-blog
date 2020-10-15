@@ -1,46 +1,112 @@
-import React from 'react'
-import {useStaticQuery, graphql} from "gatsby"
-import { Helmet } from 'react-helmet'
+import React from "react"
+import { Helmet } from "react-helmet"
+import { useStaticQuery, graphql } from "gatsby"
 
 const getData = graphql`
-query {
-  site {
-    siteMetadata {
-      siteTitle:title,
-      siteDesc:description,
-      image,
-      twitterUsername,
-      siteUrl:url
+  {
+    site {
+      siteMetadata {
+        siteTitle: title
+        siteDesc: description
+        image
+        author
+        siteUrl
+        twitterUsername
+      }
     }
   }
-}
 `
 
-const SEO = ({ title, description, pageImage }) => {
+const SEO = ({ title, description, pageImage, meta, pathname }) => {
   const { site } = useStaticQuery(getData)
-  
-  const {siteDesc, siteTitle, image, siteUrl, twitterUsername} = site.siteMetadata
-  return (
-    
-    <Helmet htmlAttributes={{lang: "en"}} title={`${title} | ${siteTitle}`}>
-      <meta name="description" content={description || siteDesc} />
-      <meta name="image" content={pageImage || image} />
-      
-      {/* Facebook Card */}
-      <meta name="og:url" content={siteUrl}/>
-      <meta name="og:type" content="website"/>
-      <meta name="og:title" content={`${title} | ${siteTitle}`}/>
-      <meta name="og:description" content={description || siteDesc}/>
-      <meta name="og:image" content={`${siteUrl}${pageImage}` || `${siteUrl}${image}`}/>
 
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:creator" content={twitterUsername} />
-      <meta name="twitter:title" content={`${title} | ${siteTitle}`} />
-      <meta name="twitter:description" content={description || siteDesc} />
-      <meta name="twitter:image" content={`${siteUrl}${pageImage}` || `${siteUrl}${image}`} />
-    </Helmet>
-    
+  const {
+    siteTitle,
+    siteDesc,
+    author,
+    siteUrl,
+    image,
+    twitterUsername,
+  } = site.siteMetadata
+
+  const image = pageImage && pageImage.src ? `${siteUrl}${pageImage.src}` : null
+  const canonical = pathname ? `${siteUrl}${pathname}` : null
+
+  return (
+    <Helmet
+      htmlAttributes={{
+        lang,
+      }}
+      title={`${title} | ${siteTitle}`}
+      link={
+        canonical
+          ? [
+              {
+                rel: "canonical",
+                href: canonical,
+              },
+            ]
+          : []
+      }
+      meta={[
+        {
+          name: `description`,
+          content: description || siteDesc,
+        },
+        {
+          property: `og:title`,
+          content: `${fbTitle ? `${fbTitle} | ${siteTitle}` : title}`,
+        },
+        {
+          property: `og:description`,
+          content: fbDesc || description || siteDesc,
+        },
+        {
+          property: `og:type`,
+          content: `website`,
+        },
+        {
+          name: `twitter:creator`,
+          content: twitterUsername,
+        },
+        {
+          name: `twitter:title`,
+          content: `${twitterTitle ? `${twitterTitle} | ${siteTitle}` : title}`,
+        },
+        {
+          name: `twitter:description`,
+          content: twitterDesc || description || siteDesc,
+        },
+      ]
+        .concat(
+          pageImage
+            ? [
+                {
+                  property: "og:image",
+                  content: image,
+                },
+                {
+                  property: "og:image:width",
+                  content: pageImage.width,
+                },
+                {
+                  property: "og:image:height",
+                  content: pageImage.height,
+                },
+                {
+                  name: "twitter:card",
+                  content: "summary_large_image",
+                },
+              ]
+            : [
+                {
+                  name: "twitter:card",
+                  content: "summary",
+                },
+              ]
+        )
+        .concat(meta)}
+    />
   )
 }
 

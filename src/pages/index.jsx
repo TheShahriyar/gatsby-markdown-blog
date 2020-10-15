@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <Layout>
-        <SEO title="Homepage" pageImage={metaimage}/>
+        <SEO title="Homepage" pageImage={metaimage} />
         <h1>Hello From Homepage</h1>
       </Layout>
     </>
